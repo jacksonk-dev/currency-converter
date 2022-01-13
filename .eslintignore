@@ -1,0 +1,12 @@
+**/coverage
+**/test-reports
+/public
+/functions/lib
+/build
+/.vscode
+/.storybook
+/src/registerServiceWorker.js
+**/node_modules
+.directory
+.eslintcache
+.next
