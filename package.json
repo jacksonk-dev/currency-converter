@@ -27,6 +27,7 @@
     "prop-types": "^15.6.2"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "enzyme": "^3.10.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
