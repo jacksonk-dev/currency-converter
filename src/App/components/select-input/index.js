@@ -1,11 +1,14 @@
-import React from 'react';
+import React,  {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
-const SelectInput = ({ options, value, onChange }) => (
+const SelectInput = ({ options, value, onChange }) => {
+  return (
   <Select
     onChange={onChange}
+    value={value}
     defaultValue={value || options[0].value}
     style={{ width: '100%', borderRadius: 8, padding: 4 }}
   >
@@ -18,5 +21,17 @@ const SelectInput = ({ options, value, onChange }) => (
     }
   </Select>
 );
+}
+
+SelectInput.propTypes = {
+  value: PropTypes.node,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({})),
+}
+
+SelectInput.defaultProps = {
+  options: [],
+  value: null,
+}
 
 export default SelectInput;

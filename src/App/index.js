@@ -4,15 +4,20 @@ import { Oval } from 'react-loader-spinner';
 
 import './styles.css';
 
-import { convert, supportedCryptoCurrencies, supportedFIATCurrencies } from '../API';
+import { convert, supportedCurrencies } from '../API';
 
 import NumberInput from './components/number-input';
 import SelectInput from './components/select-input';
 
 const App = () => {
+  const [cryptoIsBase, setCryptoAsBase] = useState(true);
+
+  const baseCurrencies = supportedCurrencies.filter(({ crypto }) => (crypto && cryptoIsBase) || (!crypto && !cryptoIsBase));
+  const otherCurrencies = supportedCurrencies.filter(({ abbr }) => !baseCurrencies.find((base) => base.abbr === abbr));
+
   const [amount, setAmount] = useState(1);
-  const [from, setFrom] = useState(supportedCryptoCurrencies[0].abbr);
-  const [to, setTo] = useState(supportedFIATCurrencies[0].abbr);
+  const [from, setFrom] = useState(baseCurrencies[0].abbr);
+  const [to, setTo] = useState(otherCurrencies[0].abbr);
   const [rate, setRate] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     convertCurrency({ amount, from, to });
-  }, [amount]);
+  }, [amount, from, to]);
 
   return (
     <div id="root">
@@ -67,12 +72,19 @@ const App = () => {
             setFrom(newFrom);
             convertCurrency({ amount, from: newFrom, to });
           }}
-          options={supportedCryptoCurrencies.map(currency => ({
+          options={baseCurrencies.map(currency => ({
             label: generateCurrencyFullName(currency),
             value: currency.abbr,
           }))}
         />
-        <div className="primaryButton">
+        <div 
+          className="primaryButton" 
+          onClick={() => {
+            setCryptoAsBase(!cryptoIsBase);
+            setFrom(to);
+            setTo(from);
+            convertCurrency({ amount, from: to, to: from });
+          }}>
           <ButtonIcon />
         </div>
         <SelectInput
@@ -81,7 +93,7 @@ const App = () => {
             setTo(newTo);
             convertCurrency({ amount, from, to: newTo });
           }}
-          options={supportedFIATCurrencies.map(currency => ({
+          options={otherCurrencies.filter(({ crypto }) => (crypto && !cryptoIsBase) || (!crypto && cryptoIsBase)).map(currency => ({
             label: generateCurrencyFullName(currency),
             value: currency.abbr,
           }))}
@@ -91,7 +103,9 @@ const App = () => {
         <div />
         <div>
           <span className="value">{ amount }</span>
-          <span>{ generateCurrencyFullName(supportedCryptoCurrencies.find(({ abbr }) => abbr === from)) }</span>
+          <span>
+            { generateCurrencyFullName(supportedCurrencies.find(({ abbr }) => abbr === from)) }
+          </span>
           <span className="currencyEquator">=</span>
           {
             loading
@@ -106,7 +120,7 @@ const App = () => {
               )
               : <span className="value">{ rate }</span>
           }
-          <span>{ generateCurrencyFullName(supportedFIATCurrencies.find(({ abbr }) => abbr === to)) }</span>
+          <span>{ generateCurrencyFullName(supportedCurrencies.find(({ abbr }) => abbr === to)) }</span>
         </div>
       </div>
     </div>

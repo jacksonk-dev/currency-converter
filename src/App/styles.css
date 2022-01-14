@@ -29,6 +29,7 @@
   background-color: rgb(16, 112, 224);
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 input, select {
