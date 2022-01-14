@@ -3,7 +3,6 @@
 #root {
   display: grid;
   grid-gap: 8px;
-  align-items: flex-start;
   padding: 16px;
   width: 600px;
   height: fit-content;
@@ -43,15 +42,28 @@ input, select {
 }
 
 .rateContainer {
-  width: 100%;
-  text-align: right;
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+}
+
+.rateContainer div:nth-child(2) {
+  display: flex;
+  align-items: center;
 }
 
 .currencyEquator {
   margin: 0 12px;
 }
+.equationRight {
+  width: 200px;
+  display: inline-block;
+}
 
 .value {
   font-weight: 700;
   margin-right: 4px;
+}
+
+.loader {
+  margin-right: 2px;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RiArrowLeftRightFill as ButtonIcon } from 'react-icons/ri';
+import { Oval } from 'react-loader-spinner';
 
 import "./styles.css";
 
@@ -45,7 +46,7 @@ const App = () => {
 
   useEffect(() => {
     convertCurrency({ amount, from, to });
-  }, [])
+  }, [amount])
 
   return (
     <div id="root">
@@ -89,11 +90,26 @@ const App = () => {
         />
       </div>
       <div className="rateContainer">
-        <span className="value">{ amount }</span>
-        <span>{ generateCurrencyFullName(supportedCryptoCurrencies.find(({abbr}) => abbr === from)) }</span>
-        <span className="currencyEquator">=</span>
-        <span className="value">{ rate }</span>
-        <span>{ generateCurrencyFullName(supportedFIATCurrencies.find(({abbr}) => abbr === to)) }</span>
+        <div />
+        <div>
+          <span className="value">{ amount }</span>
+          <span>{ generateCurrencyFullName(supportedCryptoCurrencies.find(({abbr}) => abbr === from)) }</span>
+          <span className="currencyEquator">=</span>
+          {
+            loading
+            ? (
+            <Oval 
+              arialLabel="loading-indicator" 
+              height={12} 
+              width={12} 
+              color="#000"
+              wrapperClass="loader"
+            />
+            )
+            : <span className="value">{ rate }</span>
+          }
+          <span>{ generateCurrencyFullName(supportedFIATCurrencies.find(({abbr}) => abbr === to)) }</span>
+        </div>
       </div>
     </div>
   );
