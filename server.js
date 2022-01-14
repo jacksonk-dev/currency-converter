@@ -13,16 +13,17 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/convert", (req, res) => {
+  const { amount, from, to } = req.query;
   axios
     .get(
-      "https://pro-api.coinmarketcap.com/v1/tools/price-conversion?amount=5&symbol=BTC&convert=USD",
+      `https://pro-api.coinmarketcap.com/v1/tools/price-conversion?amount=${amount}&symbol=${from}&convert=${to}`,
       {
         headers: {
           "X-CMC_PRO_API_KEY": "6c722efe-2833-4ffd-8a1c-f31b4113bf81"
         }
       }
     )
-    .then((response) => res.send(req))
+    .then((response) => res.send(response.data))
     .catch((err) => res.send(err));
 });
 

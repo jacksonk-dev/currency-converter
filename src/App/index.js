@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import "./styles.css";
 
@@ -12,18 +12,25 @@ const App = () => {
   const [from, setFrom] = useState(supportedCryptoCurrencies[0].symbol)
   const [to, setTo] = useState(supportedFIATCurrencies[0].abbr)
 
-  useEffect(() => {
-    convert(amount, from, to)
-  }, []);
+  // useEffect(() => {
+  //   convert(amount, from, to)
+  // }, []);
 
   return (
     <div id="root">
-      <NumberInput value={amount} onChange={setAmount} />
+      <NumberInput 
+        value={amount} 
+        onChange={(newAmount) => {
+          setAmount(newAmount);
+          convert(newAmount, from, to);
+        }} 
+      />
       <div id="currency-select-container">
         <SelectInput 
           value={from} 
-          onChange={(v) => {
-            console.log(v)
+          onChange={(newFrom) => {
+            setFrom(newFrom);
+            convert(amount, newFrom, to);
           }} 
           options={supportedCryptoCurrencies.map(({ abbr, name}) => ({
             label: `${name} (${abbr})`,
@@ -32,7 +39,10 @@ const App = () => {
         />
         <SelectInput 
           value={to} 
-          onChange={setTo}
+          onChange={(newTo) => {
+            setTo(newTo);
+            convert(amount, from, newTo);
+          }} 
           options={supportedFIATCurrencies.map(({ symbol, abbr, name}) => ({
             label: `${name} "${symbol}" (${abbr})`,
             value: abbr

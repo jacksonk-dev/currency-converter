@@ -15,13 +15,12 @@ export const supportedFIATCurrencies = [
 ];
 
 export const convert = (amount = 5, from = 'BTC', to = 'USD') => {
-  axios.get(conversionURL, {
+  console.log(amount, from, to)
+  return axios.get(conversionURL, {
     params: {
       amount,
       from,
       to,
     }
   })
-    .then(response => console.log(response))
-    .then(data => console.log(data));
 };
