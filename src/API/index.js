@@ -1,26 +1,27 @@
 import axios from 'axios';
 
-const conversionURL = 'https://pro-api.coinmarketcap.com/v1/tools/price-conversion';
+const conversionURL = 'http://localhost:8000/convert';
 
 export const supportedCryptoCurrencies = [
-  { BTC: 'Bitcoin' },
+  { abbr: 'BTC', name: 'Bitcoin' },
+  { abbr: 'ETH', name: 'Ethereum' },
+  { abbr: 'USDT', name: 'Tether' },
 ];
 
 export const supportedFIATCurrencies = [
-  { USD: 'US Dollar' },
+  { symbol: '$', abbr: 'USD', name: 'US Dollar' },
+  { symbol: 'L', abbr: 'ALL', name: 'Albanian Lek' },
+  { symbol: 'ARS', abbr: 'ARS', name: 'Argentine Peso' },
 ];
 
 export const convert = (amount = 5, from = 'BTC', to = 'USD') => {
   axios.get(conversionURL, {
     params: {
       amount,
-      symbol: from,
-      convert: to,
-    },
-    headers: {
-      'X-CMC_PRO_API_KEY': '6c722efe-2833-4ffd-8a1c-f31b4113bf81',
-    },
+      from,
+      to,
+    }
   })
-    .then(response => response.json())
+    .then(response => console.log(response))
     .then(data => console.log(data));
 };

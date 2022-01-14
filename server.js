@@ -1,7 +1,9 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require('cors')
 
 const app = express();
+app.use(cors())
 
 app.use(express.static("build"));
 app.use(express.json());
@@ -20,9 +22,8 @@ app.get("/convert", (req, res) => {
         }
       }
     )
-    .then((response) => res.send(response))
+    .then((response) => res.send(req))
     .catch((err) => res.send(err));
-  // res.send('Hello World!');
 });
 
 app.listen(process.env.PORT || 8000, () =>
