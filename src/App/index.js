@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RiArrowLeftRightFill as ButtonIcon } from 'react-icons/ri';
 
 import "./styles.css";
 
@@ -15,19 +16,23 @@ const App = () => {
   const [loading, setLoading] = useState(false);
 
   const convertCurrency = (data) => {
-    setLoading(true);
-    convert(data)
-    .then((result) => {
-      const latestRate = result.data.data.quote[to].price;
-      console.log(latestRate)
-      setRate(Math.round((latestRate + Number.EPSILON) * 100) / 100);
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-    .finally(() => {
-      setLoading(false)
-    })
+    if(data.amount === 0) {
+      setRate(0);
+    } else {
+      setLoading(true);
+      convert(data)
+      .then((result) => {
+        console.log(result)
+        const latestRate = result.data.data.quote[data.to].price;
+        setRate(Math.round((latestRate + Number.EPSILON) * 100) / 100);
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    }
   }
 
   const generateCurrencyFullName = (currencyObj) => {
@@ -47,9 +52,12 @@ const App = () => {
       <NumberInput 
         value={amount} 
         onChange={(newAmount) => {
-          setAmount(newAmount);
-          convertCurrency({ amount: newAmount, from, to });
-        }} 
+          if(typeof newAmount === 'number') {
+            setAmount(newAmount);
+            convertCurrency({ amount: newAmount, from, to });
+          }
+        }}
+        placeholder="Enter Amount to Convert"
       />
       <div id="currency-select-container">
         <SelectInput 
@@ -64,6 +72,9 @@ const App = () => {
               value: currency.abbr
           }})} 
         />
+        <div className="primaryButton">
+          <ButtonIcon />
+        </div>
         <SelectInput 
           value={to} 
           onChange={(newTo) => {
