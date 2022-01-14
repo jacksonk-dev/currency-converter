@@ -2,9 +2,15 @@ const axios = require("axios");
 const express = require("express");
 
 const app = express();
-const port = 8080;
 
-app.get("/", (req, res) => {
+app.use(express.static("build"));
+app.use(express.json());
+
+app.get("/", async (req, res) => {
+  res.status(200).send("success");
+});
+
+app.get("/convert", (req, res) => {
   axios
     .get(
       "https://pro-api.coinmarketcap.com/v1/tools/price-conversion?amount=5&symbol=BTC&convert=USD",
@@ -19,6 +25,6 @@ app.get("/", (req, res) => {
   // res.send('Hello World!');
 });
 
-app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
-});
+app.listen(process.env.PORT || 8000, () =>
+  console.log(`Listening on port ${process.env.PORT || 8000}!`)
+);
