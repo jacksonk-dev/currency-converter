@@ -14,8 +14,8 @@ export const supportedFIATCurrencies = [
   { symbol: 'ARS', abbr: 'ARS', name: 'Argentine Peso' },
 ];
 
-export const convert = (amount = 5, from = 'BTC', to = 'USD') => {
-  console.log(amount, from, to)
+export const convert = (data) => {
+  const { amount, from, to } = data;
   return axios.get(conversionURL, {
     params: {
       amount,

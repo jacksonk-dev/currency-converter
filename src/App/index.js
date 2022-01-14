@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./styles.css";
 
@@ -8,13 +8,39 @@ import NumberInput from "./components/number-input";
 import SelectInput from "./components/select-input";
 
 const App = () => {
-  const [amount, setAmount] = useState(0)
-  const [from, setFrom] = useState(supportedCryptoCurrencies[0].symbol)
+  const [amount, setAmount] = useState(1)
+  const [from, setFrom] = useState(supportedCryptoCurrencies[0].abbr)
   const [to, setTo] = useState(supportedFIATCurrencies[0].abbr)
+  const [rate, setRate] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   convert(amount, from, to)
-  // }, []);
+  const convertCurrency = (data) => {
+    setLoading(true);
+    convert(data)
+    .then((result) => {
+      const latestRate = result.data.data.quote[to].price;
+      console.log(latestRate)
+      setRate(Math.round((latestRate + Number.EPSILON) * 100) / 100);
+    })
+    .catch((e) => {
+      console.log(e)
+    })
+    .finally(() => {
+      setLoading(false)
+    })
+  }
+
+  const generateCurrencyFullName = (currencyObj) => {
+    const { name, abbr, symbol } = currencyObj;
+    let fullName = name;
+    fullName += symbol ? ` "${symbol}" ` : ' ';
+    fullName += `(${abbr})`;
+    return fullName;
+  }
+
+  useEffect(() => {
+    convertCurrency({ amount, from, to });
+  }, [])
 
   return (
     <div id="root">
@@ -22,7 +48,7 @@ const App = () => {
         value={amount} 
         onChange={(newAmount) => {
           setAmount(newAmount);
-          convert(newAmount, from, to);
+          convertCurrency({ amount: newAmount, from, to });
         }} 
       />
       <div id="currency-select-container">
@@ -30,24 +56,33 @@ const App = () => {
           value={from} 
           onChange={(newFrom) => {
             setFrom(newFrom);
-            convert(amount, newFrom, to);
+            convertCurrency({ amount, from: newFrom, to });
           }} 
-          options={supportedCryptoCurrencies.map(({ abbr, name}) => ({
-            label: `${name} (${abbr})`,
-            value: abbr
-          }))} 
+          options={supportedCryptoCurrencies.map((currency) => {
+            return {
+              label: generateCurrencyFullName(currency),
+              value: currency.abbr
+          }})} 
         />
         <SelectInput 
           value={to} 
           onChange={(newTo) => {
             setTo(newTo);
-            convert(amount, from, newTo);
+            convertCurrency({ amount, from, to: newTo});
           }} 
-          options={supportedFIATCurrencies.map(({ symbol, abbr, name}) => ({
-            label: `${name} "${symbol}" (${abbr})`,
-            value: abbr
-          }))} 
+          options={supportedFIATCurrencies.map((currency) => {
+            return {
+              label: generateCurrencyFullName(currency),
+              value: currency.abbr
+          }})} 
         />
+      </div>
+      <div className="rateContainer">
+        <span className="value">{ amount }</span>
+        <span>{ generateCurrencyFullName(supportedCryptoCurrencies.find(({abbr}) => abbr === from)) }</span>
+        <span className="currencyEquator">=</span>
+        <span className="value">{ rate }</span>
+        <span>{ generateCurrencyFullName(supportedFIATCurrencies.find(({abbr}) => abbr === to)) }</span>
       </div>
     </div>
   );

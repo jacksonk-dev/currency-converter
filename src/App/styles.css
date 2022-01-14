@@ -1,8 +1,8 @@
 @import '~antd/dist/antd.css';
 
 #root {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-gap: 8px;
   align-items: flex-start;
   padding: 16px;
   width: 600px;
@@ -31,4 +31,18 @@ input, select {
 
 .select {
   width: 100%;
+}
+
+.rateContainer {
+  width: 100%;
+  text-align: right;
+}
+
+.currencyEquator {
+  margin: 0 12px;
+}
+
+.value {
+  font-weight: 700;
+  margin-right: 4px;
 }
