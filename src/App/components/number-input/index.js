@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { InputNumber } from 'antd';
 
-const NumberInput = ({ value, onChange, min, placeholder }) => (
+const NumberInput = ({
+  value, onChange, min, placeholder,
+}) => (
   <InputNumber
     min={min}
     value={value}
@@ -17,11 +19,11 @@ NumberInput.propTypes = {
   value: PropTypes.number,
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-}
+};
 
 NumberInput.defaultProps = {
   min: 0,
-  placeholder: 'Enter Number'
-}
+  placeholder: 'Enter Number',
+};
 
 export default NumberInput;

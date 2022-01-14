@@ -21,6 +21,6 @@ export const convert = (data) => {
       amount,
       from,
       to,
-    }
-  })
+    },
+  });
 };
