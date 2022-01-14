@@ -7,7 +7,9 @@
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix ",
     "test:coverage": "react-scripts test --coverage --testMatch=**/test.{js,jsx}",
-    "start": "react-scripts build; node server.js",
+    "client": "react-scripts start",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "react-scripts build;",
     "test": "react-scripts test --testMatch=**/test.{js,jsx}"
   },
@@ -28,8 +30,10 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "concurrently": "7.0.0",
     "enzyme": "^3.10.0",
     "express": "^4.17.2",
+    "nodemon": "2.0.15",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-icons": "^2.2.7",
@@ -55,11 +59,7 @@
     ]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

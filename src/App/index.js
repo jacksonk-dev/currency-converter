@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import './styles.css';
+import "./styles.css";
 
-import { convert } from '../API';
+import { convert } from "../API";
 
-import NumberInput from './components/number-input';
-import SelectInput from './components/select-input';
+import NumberInput from "./components/number-input";
+import SelectInput from "./components/select-input";
 
 const App = () => {
-  useEffect(() => {
-    convert();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div id="root">
