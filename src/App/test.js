@@ -47,18 +47,35 @@ describe('App', () => {
       expect(convert).not.toHaveBeenCalled();
     });
 
-    describe('Converting after waiting', () => {
+    describe('After waiting', () => {
       let waitedCall;
-      beforeEach(() => {
+      it('should call the convert function 300ms after data changes', () => {
         act(() => {
           wrapper.find(NumberInput).prop('onChange')(5);
         });
-      });
-
-      it('should call the convert function 300ms after data changes', () => {
         waitedCall = setTimeout(() => {
           expect(convert).toHaveBeenCalled();
         }, 300);
+      });
+
+      it('Should not crash if user deletes amount', () => {
+        act(() => {
+          wrapper.find(NumberInput).prop('onChange')('');
+        });
+
+        waitedCall = setTimeout(() => {
+          expect(wrapper);
+        }, 500);
+      });
+
+      it('Should set the rate to 0 if the user provides 0 as the amount', () => {
+        act(() => {
+          wrapper.find(NumberInput).prop('onChange')(0);
+        });
+
+        waitedCall = setTimeout(() => {
+          expect(wrapper.find('#rate').innerHTML).toBe(7);
+        }, 500);
       });
 
       afterEach(() => {

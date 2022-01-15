@@ -117,7 +117,7 @@ const App = () => {
                   wrapperClass="loader"
                 />
               )
-              : <span className="value">{ rate }</span>
+              : <span id="rate" className="value">{ rate }</span>
           }
           <span>{ generateCurrencyFullName(supportedCurrencies.find(({ abbr }) => abbr === to)) }</span>
         </div>
