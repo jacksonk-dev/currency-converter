@@ -7,12 +7,11 @@
     "lint": "eslint . --cache ",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix ",
-    "test:coverage": "react-scripts test --coverage --testMatch=**/test.{js,jsx}",
     "client": "react-scripts start",
     "server": "nodemon server.js",
     "start": "concurrently \"npm run client\" \"npm run server\"",
     "build": "react-scripts build;",
-    "test": "react-scripts test --testMatch=**/test.{js,jsx}"
+    "test": "react-scripts test --testMatch=**/test.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -43,24 +42,6 @@
     "react-loader-spinner": "^5.0.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0"
-  },
-  "jest": {
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
-    "collectCoverageFrom": [
-      "**/index.{js,jsx}",
-      "!**/*stories.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/stories/**",
-      "!**/build/**",
-      "!**/coverage/**"
-    ]
   },
   "browserslist": {
     "production": [

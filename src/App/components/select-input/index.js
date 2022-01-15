@@ -1,11 +1,10 @@
-import React,  {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
-const SelectInput = ({ options, value, onChange }) => {
-  return (
+const SelectInput = ({ options, value, onChange }) => (
   <Select
     onChange={onChange}
     value={value}
@@ -21,17 +20,18 @@ const SelectInput = ({ options, value, onChange }) => {
     }
   </Select>
 );
-}
 
 SelectInput.propTypes = {
   value: PropTypes.node,
   onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({})),
-}
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.node,
+  })),
+};
 
 SelectInput.defaultProps = {
   options: [],
   value: null,
-}
+};
 
 export default SelectInput;

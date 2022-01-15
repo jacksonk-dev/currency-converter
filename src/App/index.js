@@ -4,31 +4,33 @@ import { Oval } from 'react-loader-spinner';
 
 import './styles.css';
 
+import { generateCurrencyFullName } from '../helpers/formatters';
 import { convert, supportedCurrencies } from '../API';
-
 import NumberInput from './components/number-input';
 import SelectInput from './components/select-input';
 
 const App = () => {
   const [cryptoIsBase, setCryptoAsBase] = useState(true);
 
-  const baseCurrencies = supportedCurrencies.filter(({ crypto }) => (crypto && cryptoIsBase) || (!crypto && !cryptoIsBase));
-  const otherCurrencies = supportedCurrencies.filter(({ abbr }) => !baseCurrencies.find((base) => base.abbr === abbr));
+  const baseCurrencies = supportedCurrencies.filter(
+    ({ crypto }) => (crypto && cryptoIsBase) || (!crypto && !cryptoIsBase),
+  );
+  const otherCurrencies = supportedCurrencies.filter(
+    ({ abbr }) => !baseCurrencies.find(base => base.abbr === abbr),
+  );
 
   const [amount, setAmount] = useState(1);
   const [from, setFrom] = useState(baseCurrencies[0].abbr);
   const [to, setTo] = useState(otherCurrencies[0].abbr);
   const [rate, setRate] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const convertCurrency = (data) => {
     if (data.amount === 0) {
       setRate(0);
     } else {
-      setLoading(true);
       convert(data)
         .then((result) => {
-          console.log(result);
           const latestRate = result.data.data.quote[data.to].price;
           setRate(Math.round((latestRate + Number.EPSILON) * 100) / 100);
         })
@@ -41,16 +43,12 @@ const App = () => {
     }
   };
 
-  const generateCurrencyFullName = (currencyObj) => {
-    const { name, abbr, symbol } = currencyObj;
-    let fullName = name;
-    fullName += symbol ? ` "${symbol}" ` : ' ';
-    fullName += `(${abbr})`;
-    return fullName;
-  };
-
   useEffect(() => {
-    convertCurrency({ amount, from, to });
+    const delayDebounceFn = setTimeout(() => { // Delay call for 300ms, give user time to stop pressing keys
+      convertCurrency({ amount, from, to });
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [amount, from, to]);
 
   return (
@@ -59,8 +57,8 @@ const App = () => {
         value={amount}
         onChange={(newAmount) => {
           if (typeof newAmount === 'number') {
+            setLoading(true);
             setAmount(newAmount);
-            convertCurrency({ amount: newAmount, from, to });
           }
         }}
         placeholder="Enter Amount to Convert"
@@ -69,31 +67,31 @@ const App = () => {
         <SelectInput
           value={from}
           onChange={(newFrom) => {
+            setLoading(true);
             setFrom(newFrom);
-            convertCurrency({ amount, from: newFrom, to });
           }}
           options={baseCurrencies.map(currency => ({
             label: generateCurrencyFullName(currency),
             value: currency.abbr,
           }))}
         />
-        <div 
-          className="primaryButton" 
+        <div
+          className="primaryButton"
           onClick={() => {
             setCryptoAsBase(!cryptoIsBase);
             setFrom(to);
             setTo(from);
-            convertCurrency({ amount, from: to, to: from });
-          }}>
+          }}
+        >
           <ButtonIcon />
         </div>
         <SelectInput
           value={to}
           onChange={(newTo) => {
+            setLoading(true);
             setTo(newTo);
-            convertCurrency({ amount, from, to: newTo });
           }}
-          options={otherCurrencies.filter(({ crypto }) => (crypto && !cryptoIsBase) || (!crypto && cryptoIsBase)).map(currency => ({
+          options={otherCurrencies.map(currency => ({
             label: generateCurrencyFullName(currency),
             value: currency.abbr,
           }))}
