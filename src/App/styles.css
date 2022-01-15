@@ -24,23 +24,15 @@
 
 .primaryButton {
   color: #fff;
-  padding: 6px 12px;
+  width: 40px;
+  height: 28px;
   margin: 0 4px;
   border-radius: 5px;
   background-color: rgb(16, 112, 224);
   display: flex;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
-}
-
-input, select {
-  width: 250px;
-  padding: 8px;
-  font-size: 16px;
-}
-
-.select {
-  width: 100%;
 }
 
 .rateContainer {

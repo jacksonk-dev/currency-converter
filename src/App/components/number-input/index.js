@@ -10,7 +10,7 @@ const NumberInput = ({
     value={value}
     onChange={onChange}
     placeholder={placeholder}
-    style={{ width: '50%', borderRadius: 8, padding: 4 }}
+    style={{ width: 260, borderRadius: 4 }}
   />
 );
 
@@ -23,6 +23,7 @@ NumberInput.propTypes = {
 
 NumberInput.defaultProps = {
   min: 0,
+  value: undefined,
   placeholder: 'Enter Number',
 };
 

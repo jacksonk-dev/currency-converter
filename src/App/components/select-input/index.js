@@ -9,7 +9,7 @@ const SelectInput = ({ options, value, onChange }) => (
     onChange={onChange}
     value={value}
     defaultValue={value || options[0].value}
-    style={{ width: '100%', borderRadius: 8 }}
+    style={{ width: 260, borderRadius: 8 }}
   >
     {
       options.map(({ label, value: val }) => (
