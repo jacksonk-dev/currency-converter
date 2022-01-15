@@ -9,7 +9,7 @@
     "eslint:fix": "eslint . --fix ",
     "client": "react-scripts start",
     "server": "nodemon server.js",
-    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "concurrently \"yarn client\" \"yarn server\"",
     "build": "react-scripts build;",
     "test": "react-scripts test --testMatch=**/test.js"
   },
