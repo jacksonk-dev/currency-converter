@@ -78,6 +78,7 @@ const App = () => {
         <div
           className="primaryButton"
           onClick={() => {
+            setLoading(true);
             setCryptoAsBase(!cryptoIsBase);
             setFrom(to);
             setTo(from);
