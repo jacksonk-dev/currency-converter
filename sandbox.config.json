@@ -1,6 +1,6 @@
 {
   "template": "node",
   "container": { 
-    "port": 3212
+    "port": 3000
   }
 }
