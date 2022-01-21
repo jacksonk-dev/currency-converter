@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const conversionURL = window.location.origin + "/convert";
-console.log(conversionURL);
+const conversionURL = `${window.location.origin}/convert`;
+
 export const supportedCurrencies = [
   { abbr: "BTC", name: "Bitcoin", crypto: true },
   { abbr: "ETH", name: "Ethereum", crypto: true },

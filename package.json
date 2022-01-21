@@ -4,9 +4,8 @@
   "private": true,
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint . --cache ",
-    "eslint": "eslint .",
-    "eslint:fix": "eslint . --fix ",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix ",
     "client": "react-scripts start",
     "server": "nodemon server.js",
     "build": "react-scripts build;",
