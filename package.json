@@ -9,7 +9,7 @@
     "client": "react-scripts start",
     "server": "nodemon server.js",
     "build": "react-scripts build;",
-    "start": "concurrently \"yarn build\" \"yarn server\"",
+    "start": "yarn lint:fix; yarn build; yarn server",
     "test": "react-scripts test --testMatch=**/test.js"
   },
   "devDependencies": {
