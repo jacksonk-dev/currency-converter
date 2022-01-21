@@ -44,7 +44,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => { // Delay call for 300ms, give user time to stop pressing keys
+    const delayDebounceFn = setTimeout(() => {
+      // Delay call for 300ms, give user time to stop pressing keys
       convertCurrency({ amount, from, to });
     }, 300);
 
@@ -101,25 +102,31 @@ const App = () => {
       <div className="rateContainer">
         <div />
         <div>
-          <span className="value">{ amount }</span>
+          <span className="value">{amount}</span>
           <span>
-            { generateCurrencyFullName(supportedCurrencies.find(({ abbr }) => abbr === from)) }
+            {generateCurrencyFullName(
+              supportedCurrencies.find(({ abbr }) => abbr === from),
+            )}
           </span>
           <span className="currencyEquator">=</span>
-          {
-            loading
-              ? (
-                <Oval
-                  arialLabel="loading-indicator"
-                  height={12}
-                  width={12}
-                  color="#000"
-                  wrapperClass="loader"
-                />
-              )
-              : <span id="rate" className="value">{ rate }</span>
-          }
-          <span>{ generateCurrencyFullName(supportedCurrencies.find(({ abbr }) => abbr === to)) }</span>
+          {loading ? (
+            <Oval
+              arialLabel="loading-indicator"
+              height={12}
+              width={12}
+              color="#000"
+              wrapperClass="loader"
+            />
+          ) : (
+            <span id="rate" className="value">
+              {rate}
+            </span>
+          )}
+          <span>
+            {generateCurrencyFullName(
+              supportedCurrencies.find(({ abbr }) => abbr === to),
+            )}
+          </span>
         </div>
       </div>
     </div>

@@ -1,12 +1,11 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 
-describe('Root Index', () => {
+describe("Root Index", () => {
   beforeAll(async () => {
     ReactDOM.render = jest.fn();
-    await import('.');
   });
-  
-  it('should call ReactDOM.render and register service worker', () => {
+
+  it("should call ReactDOM.render and register service worker", () => {
     expect(ReactDOM.render).toHaveBeenCalled();
   });
 });
