@@ -1,11 +1,13 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
-
 app.use(express.json());
+
+const { COINMARKETCAP_API_KEY, SERVER_PORT } = process.env;
 
 app.get('/', async (req, res) => {
   res.status(200).send('success');
@@ -18,7 +20,7 @@ app.get('/convert', (req, res) => {
       `https://pro-api.coinmarketcap.com/v1/tools/price-conversion?amount=${amount}&symbol=${from}&convert=${to}`,
       {
         headers: {
-          'X-CMC_PRO_API_KEY': '6c722efe-2833-4ffd-8a1c-f31b4113bf81',
+          'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
         },
       },
     )
@@ -26,4 +28,4 @@ app.get('/convert', (req, res) => {
     .catch(err => res.send(err));
 });
 
-app.listen(process.env.PORT || 8000, () => console.log(`Listening on port ${process.env.PORT || 8000}!`));
+app.listen(process.env.PORT || 8000, () => console.log(`Listening on port ${SERVER_PORT || 8000}!`));
