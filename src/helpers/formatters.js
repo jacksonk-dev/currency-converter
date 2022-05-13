@@ -5,3 +5,5 @@ export const generateCurrencyFullName = (currencyObj) => {
   fullName += `(${abbr})`;
   return fullName;
 };
+
+export default generateCurrencyFullName;

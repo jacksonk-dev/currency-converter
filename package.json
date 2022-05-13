@@ -7,10 +7,10 @@
     "lint": "eslint . --cache ",
     "eslint": "eslint .",
     "eslint:fix": "eslint . --fix ",
-    "client": "PORTreact-scripts start",
-    "server": "nodemon server.js",
+    "client": "react-scripts start",
+    "server": "nodemon server.js --ignore client",
     "start": "concurrently \"yarn client\" \"yarn server\"",
-    "build": "react-scripts build;",
+    "build": "react-scripts build",
     "test": "react-scripts test --testMatch=**/test.js"
   },
   "devDependencies": {

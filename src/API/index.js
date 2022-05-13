@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const conversionURL = 'http://localhost:8000/convert';
+const conversionURL = `http://${window.location.origin}/api/convert`;
 
 export const supportedCurrencies = [
   { abbr: 'BTC', name: 'Bitcoin', crypto: true },

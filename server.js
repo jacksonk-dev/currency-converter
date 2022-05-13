@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -10,7 +11,7 @@ app.use(express.json());
 const { COINMARKETCAP_API_KEY, SERVER_PORT } = process.env;
 
 app.get('/', async (req, res) => {
-  res.status(200).send('success');
+  res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 app.get('/convert', (req, res) => {
@@ -28,4 +29,4 @@ app.get('/convert', (req, res) => {
     .catch(err => res.send(err));
 });
 
-app.listen(process.env.PORT || 8000, () => console.log(`Listening on port ${SERVER_PORT || 8000}!`));
+app.listen(process.env.PORT || 8000, () => console.log(`Listening on port ${SERVER_PORT || 8000}`));
